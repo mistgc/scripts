@@ -1,5 +1,6 @@
 #!/bin/sh
-swaylock  \
+
+swaylock \
        --screenshots \
        --clock \
        --indicator \
@@ -13,4 +14,4 @@ swaylock  \
        --inside-color 00000088 \
        --separator-color 00000000 \
        --grace 2 \
-       --fade-in 0.3
+       --fade-in 0.3 &
