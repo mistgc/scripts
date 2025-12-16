@@ -20,7 +20,17 @@ OUTPUT_NVIM_DATA_TARBALL=${PACK_WORKSPACE}/nvim-data.tar.gz
 OUTPUT_NVIM_LATEST_BIN_TARBALL=${PACK_WORKSPACE}/nvim-linux-x86_64.tar.gz
 
 tar -czvf ${OUTPUT_NVIM_CONFIG_TARBALL} --exclude=".git" -C ${NVIM_CONFIG_DIR} .
-tar -czvf ${OUTPUT_NVIM_DATA_TARBALL} -C ${NVIM_DATA_DIR} lazy mason
+tar -czvf ${OUTPUT_NVIM_DATA_TARBALL} -C ${NVIM_DATA_DIR} \
+    --exclude=".git" \
+    --exclude="mason/bin/gopls" \
+    --exclude="mason/packages/gopls" \
+    --exclude="mason/bin/texlab" \
+    --exclude="mason/packages/texlab" \
+    --exclude="mason/bin/typescript-language-server" \
+    --exclude="mason/packages/typescript-language-server" \
+    --exclude="mason/bin/vue-language-server" \
+    --exclude="mason/packages/vue-language-server" \
+    lazy mason
 wget https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz \
     -O ${OUTPUT_NVIM_LATEST_BIN_TARBALL}
 
