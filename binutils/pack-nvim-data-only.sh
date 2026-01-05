@@ -4,7 +4,7 @@ set -euo
 
 CURRENT_DIR=$(dirname $0)
 
-OUTPUT_FILE=nvim.sfx.sh
+OUTPUT_FILE=nvim-data-only.sfx.sh
 
 DATE=$(date "+%Y%m%d")
 PACK_WORKSPACE=/tmp/${DATE}-pack-nvim
@@ -17,7 +17,6 @@ NVIM_DATA_DIR=$HOME/.local/share/nvim
 
 OUTPUT_NVIM_CONFIG_TARBALL=${PACK_WORKSPACE}/nvim-config.tar.gz
 OUTPUT_NVIM_DATA_TARBALL=${PACK_WORKSPACE}/nvim-data.tar.gz
-OUTPUT_NVIM_LATEST_BIN_TARBALL=${PACK_WORKSPACE}/nvim-linux-x86_64.tar.gz
 
 tar -czvf ${OUTPUT_NVIM_CONFIG_TARBALL} --exclude=".git" -C ${NVIM_CONFIG_DIR} .
 tar -czvf ${OUTPUT_NVIM_DATA_TARBALL} -C ${NVIM_DATA_DIR} \
@@ -31,11 +30,9 @@ tar -czvf ${OUTPUT_NVIM_DATA_TARBALL} -C ${NVIM_DATA_DIR} \
     --exclude="mason/bin/vue-language-server" \
     --exclude="mason/packages/vue-language-server" \
     lazy mason
-wget https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz \
-    -O ${OUTPUT_NVIM_LATEST_BIN_TARBALL}
 
 ARCHIVE_FILE_PATH=${PACK_WORKSPACE}/archive.tar.gz
-tar -czvf ${ARCHIVE_FILE_PATH} -C ${PACK_WORKSPACE} nvim-config.tar.gz nvim-data.tar.gz nvim-linux-x86_64.tar.gz
+tar -czvf ${ARCHIVE_FILE_PATH} -C ${PACK_WORKSPACE} nvim-config.tar.gz nvim-data.tar.gz
 
 HEADER_FILE_PATH=${PACK_WORKSPACE}/header.sh
 
@@ -82,15 +79,13 @@ ls -al ${TEMP_DIR} || { echo "Error: Cannot change directory."; exit 1; }
 
 NVIM_CONFIG_DIR=${PREFIX}/.config/nvim
 NVIM_DATA_DIR=${PREFIX}/.local/share/nvim
-NVIM_BIN_DIR=${PREFIX}/.local/bin
+
 NVIM_CONFIG_TARBALL=${TEMP_DIR}/nvim-config.tar.gz
 NVIM_DATA_TARBALL=${TEMP_DIR}/nvim-data.tar.gz
-NVIM_BIN_TARBALL=${TEMP_DIR}/nvim-linux-x86_64.tar.gz
 
 mkdir -p ${NVIM_CONFIG_DIR} ${NVIM_DATA_DIR} ${BIN_PREFIX}
 tar -xvf ${NVIM_CONFIG_TARBALL} -C ${NVIM_CONFIG_DIR}
 tar -xvf ${NVIM_DATA_TARBALL} -C ${NVIM_DATA_DIR}
-tar -xvf ${NVIM_BIN_TARBALL} -C ${TEMP_DIR}
 
 ### Install
 
